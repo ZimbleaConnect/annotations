@@ -8,7 +8,6 @@
         "docblock",
         "parser"
     ],
-    "version": "2.0.1",
     "authors": [
         {
             "name": "Guilherme Blanco",
