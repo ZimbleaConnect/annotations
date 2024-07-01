@@ -11,6 +11,7 @@ use Reflector;
 use function array_map;
 use function array_merge;
 use function assert;
+use function file_exists;
 use function filemtime;
 use function max;
 use function rawurlencode;
@@ -195,7 +196,7 @@ final class PsrCachedReader implements Reader
         $parent = $class->getParentClass();
 
         $lastModification =  max(array_merge(
-            [$filename ? filemtime($filename) : 0],
+            [$filename && file_exists($filename)  ? filemtime($filename) : 0],
             array_map(function (ReflectionClass $reflectionTrait): int {
                 return $this->getTraitLastModificationTime($reflectionTrait);
             }, $class->getTraits()),
@@ -219,7 +220,7 @@ final class PsrCachedReader implements Reader
         }
 
         $lastModificationTime = max(array_merge(
-            [$fileName ? filemtime($fileName) : 0],
+            [$fileName && file_exists($fileName) ? filemtime($fileName) : 0],
             array_map(function (ReflectionClass $reflectionTrait): int {
                 return $this->getTraitLastModificationTime($reflectionTrait);
             }, $reflectionTrait->getTraits())
